@@ -938,3 +938,15 @@ themeSelect.addEventListener("change", () => applyTheme(themeSelect.value));
 const savedTheme = localStorage.getItem("js-compiler-theme") || "catppuccin";
 themeSelect.value = savedTheme;
 applyTheme(savedTheme);
+
+
+
+const cardBtn = document.getElementById("cardsBtn");
+cardBtn.onclick =()=>{
+  const myNewWindow = window.open("", "_blank");
+        //window.location.href="cards.html";
+  if (myNewWindow) {
+    myNewWindow.location.href = "cards.html";
+   }
+}
+
