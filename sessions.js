@@ -940,7 +940,7 @@ themeSelect.value = savedTheme;
 applyTheme(savedTheme);
 
 
-document.getElementById("cardsBtn")?.addEventListener("click", () => {
+document.getElementById("cardBtn")?.addEventListener("click", () => {
   window.open("cards.html", "_blank");
 });
 
