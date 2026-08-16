@@ -1,0 +1,402 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── CSS custom-property theme tokens ───────────────────── */
+:root {
+  --bg-body: #1e1e2e;
+  --bg-header: #181825;
+  --bg-output: #11111b;
+  --bg-lnums: #181825;
+  --border: #313244;
+  --text-main: #cdd6f4;
+  --text-muted: #6c7086;
+  --text-lnums: #45475a;
+  --caret: #cdd6f4;
+
+  /* syntax */
+  --tok-keyword: #cba6f7;
+  --tok-builtin: #89dceb;
+  --tok-string: #a6e3a1;
+  --tok-template: #a6e3a1;
+  --tok-number: #fab387;
+  --tok-comment: #6c7086;
+  --tok-regex: #f2cdcd;
+  --tok-operator: #89b4fa;
+  --tok-punct: #cdd6f4;
+  --tok-ident: #cdd6f4;
+  --tok-classname: #f9e2af;
+  --tok-funcname: #89b4fa;
+  --tok-property: #f2cdcd;
+  --tok-boolean: #fab387;
+  --tok-article: #6a8051;
+  --tok-modelverb: #802a3e;
+  --tok-propositions: #2f6662;
+  --tok-verbs: #b13157;
+  --tok-adverbs: #cf4a72;
+  --tok-verbing: #8b445a;
+  --tok-nouns:#bec040;
+  --tok-demonstrations:#65b65d;
+  --tok-subjectpronouns:#f75205;
+  --tok-objectpronouns:#1f5de4;
+  
+  /*   ,   */
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-body);
+  color: var(--text-main);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition:
+    background 0.25s,
+    color 0.25s;
+  padding: 2rem 8rem;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+header {
+  background: var(--bg-header);
+  padding: 9px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--tok-keyword);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+button {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
+}
+button:hover {
+  opacity: 0.85;
+}
+button:active {
+  transform: scale(0.96);
+}
+
+#runBtn {
+  background: var(--tok-string);
+  color: #1e1e2e;
+  display: none;
+}
+#clearBtn {
+  background: #f38ba8;
+  color: #1e1e2e;
+  display: none;
+}
+#resetBtn {
+  background: var(--tok-operator);
+  color: #1e1e2e;
+  width: 12rem;
+  font-size: larger;
+}
+
+/* ── Theme selector ──────────────────────────────────────── */
+.theme-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.theme-wrap label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+#themeSelect {
+  background: var(--bg-body);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.82rem;
+  font:
+    26px/2 "Cascadia Code",
+    "Fira Code",
+    "Consolas",
+    monospace;
+  cursor: pointer;
+  outline: none;
+}
+#themeSelect:focus {
+  border-color: var(--tok-keyword);
+}
+
+/* ── Main layout ─────────────────────────────────────────── */
+main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Editor pane ─────────────────────────────────────────── */
+.editor-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+}
+
+.pane-label {
+  background: var(--bg-header);
+  padding: 5px 44px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.editor-wrapper {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+#lineNumbers {
+  background: var(--bg-lnums);
+  color: var(--text-lnums);
+  padding: 12px 10px;
+  font:
+    14px/1.6 "Cascadia Code",
+    "Fira Code",
+    "Consolas",
+    monospace;
+  font:
+    26px/2 "Cascadia Code",
+    "Fira Code",
+    "Consolas",
+    monospace;
+  text-align: right;
+  user-select: none;
+  overflow: hidden;
+  min-width: 42px;
+  border-right: 1px solid var(--border);
+  white-space: pre;
+  flex-shrink: 0;
+  transition:
+    background 0.25s,
+    color 0.25s;
+}
+
+#highlight {
+  position: absolute;
+  top: 0;
+  left: 42px;
+  right: 0;
+  bottom: 0;
+  padding: 12px 14px;
+
+  font:
+    26px/2 "Cascadia Code",
+    "Fira Code",
+    "Consolas",
+    monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow: auto;
+  pointer-events: none;
+  color: transparent;
+}
+
+#codeInput {
+  position: absolute;
+  top: 0;
+  left: 42px;
+  right: 0;
+  bottom: 0;
+  padding: 14px 24px;
+  padding: 12px 14px;
+  font:
+    26px/2 "Cascadia Code",
+    "Fira Code",
+    "Consolas",
+    monospace;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--caret);
+  border: none;
+  outline: none;
+  resize: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow: auto;
+  spellcheck: false;
+  tab-size: 2;
+  z-index: 1;
+  display: flex;
+  justify-content: space-around;
+  justify-items: normal;
+  align-items: center;
+  align-content: center;
+}
+
+/* ── Output pane ─────────────────────────────────────────── */
+.output-pane {
+  width: 8%;
+  display: flex;
+  flex-direction: column;
+}
+
+#output {
+  display: none;
+  flex: 1;
+  padding: 12px 4px;
+  font:
+    13px/1.6 "Cascadia Code",
+    "Fira Code",
+    "Consolas",
+    monospace;
+  /*font: 26px/2 'Cascadia Code','Fira Code','Consolas',monospace;*/
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--bg-output);
+  transition: background 0.25s;
+}
+
+.out-log {
+  color: var(--text-main);
+}
+.out-warn {
+  color: var(--tok-number);
+}
+.out-error {
+  color: #f38ba8;
+}
+.out-info {
+  color: var(--tok-builtin);
+}
+.out-return {
+  color: var(--tok-string);
+  font-style: italic;
+}
+
+/* ── Syntax token colours (use CSS vars) ─────────────────── */
+.tok-keyword {
+  color: var(--tok-keyword);
+  font-weight: bold;
+}
+.tok-builtin {
+  color: var(--tok-builtin);
+}
+.tok-string {
+  color: var(--tok-string);
+}
+.tok-template {
+  color: var(--tok-template);
+}
+.tok-number {
+  color: var(--tok-number);
+}
+.tok-comment {
+  color: var(--tok-comment);
+  font-style: italic;
+}
+.tok-regex {
+  color: var(--tok-regex);
+}
+.tok-operator {
+  color: var(--tok-operator);
+}
+.tok-punctuation {
+  color: var(--tok-punct);
+}
+.tok-identifier {
+  color: var(--tok-ident);
+}
+.tok-classname {
+  color: var(--tok-classname);
+  font-weight: bold;
+}
+.tok-article {
+  color: var(--tok-article);
+  font-weight: bold;
+}
+.tok-funcname {
+  color: var(--tok-funcname);
+}
+.tok-modelverb {
+  color: var(--tok-modelverb);
+}
+.tok-property {
+  color: var(--tok-property);
+}
+.tok-boolean {
+  color: var(--tok-boolean);
+  font-weight: bold;
+}
+.tok-null {
+  color: var(--tok-boolean);
+  font-weight: bold;
+}
+.tok-propositions {
+  color: var(--tok-propositions);
+}
+
+.tok-verbs {
+  color: var(--tok-verbs);
+}
+.tok-verbing {
+  color: var(--tok-verbing);
+}
+.tok-questionwords{
+    color: var(--tok-questionwords);
+}
+.tok-nouns{
+    color: var(--tok-nouns);
+}
+.tok-demonstrations{
+    color: var(--tok-demonstrations);
+}
+.tok-subjectpronouns{
+    color: var(--tok-subjectpronouns);
+}
+
+.tok-objectpronouns{
+    color: var(--tok-objectpronouns);
+}
+
+.tok-adverbs{
+    color: var(--tok-adverbs);
+}
+
+/*  
+--tok-adverbs: #cf4a72;
+
+*/

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sessions to improve your skills</title>
+  <link rel="stylesheet" href="sessions.css">
+   
+</head>
+<body>
+
+<header>
+  <h1>⚡ Teaching Website</h1>
+  <div class="header-actions">
+    <div class="theme-wrap">
+      <label for="themeSelect">🎨 Theme:</label>
+      <select id="themeSelect">
+        <option value="catppuccin">Sunset</option>
+        <option value="dracula">Frightened</option>
+        <option value="github-dark">Nightmare</option>
+        <option value="solarized">Waves</option>
+        <option value="nord">Classic</option>
+      </select>
+    </div>
+    <button id="runBtn">▶ Run</button>
+    <button id="clearBtn">✕ Clear</button>
+    <button id="resetBtn">↺ Reset</button>
+  </div>
+</header>
+
+<main>
+  <div class="editor-pane">
+    <div class="pane-label">Mr. Ibrahim Elsebaey — An online English language teacher</div>
+    <div class="editor-wrapper">
+      <div id="lineNumbers">1</div>
+      <div id="highlight" aria-hidden="true"></div>
+      <textarea
+        id="codeInput"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        aria-label="JavaScript code editor"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="output-pane">
+    <div class="pane-label">RESULT</div>
+    <div id="output"></div>
+  </div>
+</main>
+<script src="sessions.js"></script>
+
+</body>
+</html>
