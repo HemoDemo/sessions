@@ -941,6 +941,6 @@ applyTheme(savedTheme);
 
 
 document.getElementById("cardBtn")?.addEventListener("click", () => {
-  window.open("cards.html", "_blank");
+  window.open("https://hemodemo.github.io/sessions/cards.html", "_blank");
 });
 
