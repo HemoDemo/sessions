@@ -940,13 +940,7 @@ themeSelect.value = savedTheme;
 applyTheme(savedTheme);
 
 
-
-const cardBtn = document.getElementById("cardsBtn");
-cardBtn.onclick =()=>{
-  const myNewWindow = window.open("", "_blank");
-        //window.location.href="cards.html";
-  if (myNewWindow) {
-    myNewWindow.location.href = "cards.html";
-   }
-}
+document.getElementById("cardsBtn")?.addEventListener("click", () => {
+  window.open("cards.html", "_blank");
+});
 
